@@ -5,12 +5,15 @@
 # net=host:   ホストとネットワーク名前空間を共有
 # ipc=host:   ホストとメモリ共有
 
-docker run --rm --gpus all --privileged --net=host --ipc=host \
--e LOCAL_UID=$(id -u $USER) \
--e LOCAL_GID=$(id -g $USER) \
+docker run --rm -it --gpus all --privileged --net=host --ipc=host \
+-e DOCKER_USER_NAME=$(id -un) \
+-e DOCKER_USER_ID=$(id -u) \
+-e DOCKER_USER_GROUP_NAME=$(id -gn) \
+-e DOCKER_USER_GROUP_ID=$(id -g) \
 -v $HOME/.Xauthority:/home/$(id -un)/.Xauthority -e XAUTHORITY=/home/$(id -un)/.Xauthority \
 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY \
 -v /dev/snd:/dev/snd -e AUDIODEV="hw:Device, 0" \
 -v /home/$USER/workspace/C-DSVAE:/home/$USER/workspace/C-DSVAE \
 -v /home/$USER/workspace/dataset:/home/$USER/workspace/dataset \
-docker_cdsvae python3.8 usecase/train_cdsvae.py
+-v /home/$USER/.pdbhistory:/home/$USER/.pdbhistory \
+docker_cdsvae

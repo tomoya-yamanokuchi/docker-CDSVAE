@@ -2,8 +2,23 @@
 # FROM nvidia/cudagl:11.4.0-base-ubuntu20.04
 FROM nvidia/cudagl:11.1.1-base-ubuntu18.04
 
+
 # Install packages without prompting the user to answer any questions
 ENV DEBIAN_FRONTEND=noninteractive
+
+
+#####################################################
+# switch from root to user
+#####################################################
+ENV UNAME tomoya-y
+RUN useradd -m $UNAME
+WORKDIR /home/$UNAME
+# For uid, gid
+RUN apt-get update -qq && apt-get -y install gosu
+COPY  assets/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
 
 #####################################################
 # Install common apt packages
@@ -76,23 +91,5 @@ COPY pip/requirements.txt requirements.txt
 RUN python3.8 -m pip install -r requirements.txt
 
 
-#####################################################
-# alias for running code
-#####################################################
-RUN echo "alias run='cd ~/workspace/C-DSVAE && python3.8 usecase/train_cdsvae.py'" >> /root/.bashrc
-
-
-#####################################################
-# Run scripts (commands)
-#####################################################
-
-### terminator window settings
-COPY assets/config /
-
-### user group settings
-COPY assets/entrypoint_setup.sh /
-ENTRYPOINT ["/entrypoint_setup.sh"] /
-
-# Run terminator
-# CMD ["terminator", "-u"]
-CMD ["/bin/bash"]
+# cd for running python code
+WORKDIR /home/tomoya-y/workspace/C-DSVAE
