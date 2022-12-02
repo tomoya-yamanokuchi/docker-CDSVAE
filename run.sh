@@ -1,3 +1,5 @@
+#! /bin/bash
+
 # rm:         コンテナ終了時に自動的にコンテナを削除
 # it:         -i + -t: 標準入力とTerminalをAttachする
 # gpus:       all, または 0, 1, 2
@@ -13,4 +15,5 @@ docker run --rm --gpus all --privileged --net=host --ipc=host \
 -v /dev/snd:/dev/snd -e AUDIODEV="hw:Device, 0" \
 -v /home/$USER/workspace/C-DSVAE:/home/$USER/workspace/C-DSVAE \
 -v /home/$USER/workspace/dataset:/home/$USER/workspace/dataset \
+-v /mnt/logs_cdsvae:/mnt/logs_cdsvae \
 docker_cdsvae python3.8 usecase/train_cdsvae.py
