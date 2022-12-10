@@ -91,5 +91,16 @@ COPY pip/requirements.txt requirements.txt
 RUN python3.8 -m pip install -r requirements.txt
 
 
+#####################################################
+# Pytorch Lightning
+#####################################################
+COPY pip/requirements_pytorch_lightning.txt requirements_pytorch_lightning.txt
+RUN python3.8 -m pip install -r requirements_pytorch_lightning.txt
+
+
+# ### terminator window settings
+# COPY assets/config /
+
 # cd for running python code
-WORKDIR /home/tomoya-y/workspace/C-DSVAE
+# WORKDIR /home/tomoya-y/workspace/C-DSVAE
+WORKDIR /home/tomoya-y/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder
