@@ -11,8 +11,6 @@ do
     -v /home/$USER/workspace/C-DSVAE:/home/$USER/workspace/C-DSVAE \
     -v /home/$USER/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder:/home/$USER/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder \
     -v /home/$USER/workspace/dataset:/home/$USER/workspace/dataset \
-    -v /mnt/logs_cdsvae:/mnt/logs_cdsvae \
-    docker_cdsvae python3.8 usecase/train.py
+    -v /hdd_mount/logs_cdsvae:/hdd_mount/logs_cdsvae \
+    docker_cdsvae python3.8 usecase/train.py memo=$1
 done
-
-#
