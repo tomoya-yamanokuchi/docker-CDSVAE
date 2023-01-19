@@ -103,4 +103,5 @@ RUN python3.8 -m pip install -r requirements_pytorch_lightning.txt
 
 # cd for running python code
 # WORKDIR /home/tomoya-y/workspace/C-DSVAE
-WORKDIR /home/tomoya-y/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder
+# WORKDIR /home/tomoya-y/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder
+WORKDIR /home/tomoya-y/workspace/Controllable-C-DSVAE

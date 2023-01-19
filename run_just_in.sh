@@ -14,6 +14,7 @@ docker run --rm -it --gpus all --privileged --net=host --ipc=host \
 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY \
 -v /dev/snd:/dev/snd -e AUDIODEV="hw:Device, 0" \
 -v /home/$USER/workspace/C-DSVAE:/home/$USER/workspace/C-DSVAE \
+-v /home/$USER/workspace/Controllable-C-DSVAE:/home/$USER/workspace/Controllable-C-DSVAE \
 -v /home/$USER/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder:/home/$USER/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder \
 -v /home/$USER/workspace/dataset:/home/$USER/workspace/dataset \
 -v /hdd_mount/logs_cdsvae:/hdd_mount/logs_cdsvae \
