@@ -14,10 +14,11 @@ do
     -v /home/$USER/workspace/dataset:/home/$USER/workspace/dataset \
     -v /hdd_mount/logs_cdsvae:/hdd_mount/logs_cdsvae \
     docker_cdsvae python3.8 usecase/train/train.py \
+    --config-name=$1 \
     loss.weight.kld_context=1 \
     loss.weight.kld_dynamics=1 \
     loss.weight.contrastive_loss_fx=0.0 \
     loss.weight.contrastive_loss_zx=0.0 \
     loss.weight.mutual_information_fz=0.0 \
-    memo=$1
+    memo=$2
 done

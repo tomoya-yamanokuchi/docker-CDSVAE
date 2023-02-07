@@ -13,5 +13,5 @@ do
     -v /home/$USER/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder:/home/$USER/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder \
     -v /home/$USER/workspace/dataset:/home/$USER/workspace/dataset \
     -v /hdd_mount/logs_cdsvae:/hdd_mount/logs_cdsvae \
-    docker_cdsvae python3.8 usecase/train/train.py memo=$1
+    docker_cdsvae python3.8 usecase/train/train.py --config-name=$1 memo=$2
 done
