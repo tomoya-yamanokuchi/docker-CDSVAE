@@ -1,1 +1,1 @@
-docker build ./ -t docker_cdsvae
+docker build ./ -t docker_cdsvae_control
