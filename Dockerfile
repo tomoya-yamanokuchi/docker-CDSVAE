@@ -46,6 +46,8 @@ RUN apt-get update && apt-get install -y \
 	software-properties-common \
 	subversion \
 	libssl-dev \
+	python3-dev \
+	python3.8-dev \
 	### Development tools
 	build-essential \
 	htop \
@@ -57,9 +59,9 @@ RUN apt-get update && apt-get install -y \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-#####################################################
+# ####################################################
 # Set locale & time zone
-#####################################################
+# ####################################################
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
@@ -98,10 +100,62 @@ COPY pip/requirements_pytorch_lightning.txt requirements_pytorch_lightning.txt
 RUN python3.8 -m pip install -r requirements_pytorch_lightning.txt
 
 
+#####################################################
+# MuJoCo 200
+#####################################################
+# COPY /root/.mujoco/ /home/$USER/
+# COPY packages/.mujoco /root/.mujoco
+
+# ENV LD_LIBRARY_PATH /root/.mujoco/mujoco200/bin:${LD_LIBRARY_PATH}
+# ENV LD_LIBRARY_PATH /home/tomoya-y/.mujoco/mujoco200/bin:${LD_LIBRARY_PATH}
+# ENV LD_LIBRARY_PATH /usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
+
+COPY packages/.mujoco /home/$UNAME/.mujoco
+ENV LD_LIBRARY_PATH /home/$UNAME/.mujoco/mujoco200/bin:${LD_LIBRARY_PATH}
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
+
+
+RUN apt-get update && apt-get install -y \
+	mesa-utils \
+  libgl1-mesa-dev \
+  libgl1-mesa-glx \
+  libosmesa6-dev \
+  libglew-dev \
+  virtualenv \
+  xpra \
+  patchelf \
+  xserver-xorg-dev \
+	swig \
+	&& apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN curl -o /usr/local/bin/patchelf https://s3-us-west-2.amazonaws.com/openai-sci-artifacts/manual-builds/patchelf_0.9_amd64.elf \
+    && chmod +x /usr/local/bin/patchelf
+
+
+# #####################################################
+# # mujoco-py
+# #####################################################
+# RUN chmod 777 /root
+# RUN cp -r /root/.mujoco/ /home/$USER/
+
+RUN mkdir /home/$UNAME/.cache
+RUN chmod -R 777 /home/$UNAME/.cache/
+RUN chmod -R 777 /home/$UNAME/.mujoco/
+
+# RUN pip install 'mujoco-py<2.1,>=2.0'
+# RUN pip install mujoco-py==2.0.2.13
+
+RUN pip install mujoco-py==2.0.2.8
+RUN chmod -R 777 /usr/local/lib/python3.8/dist-packages/mujoco_py*
+ENV LD_PRELOAD=$LD_PRELOAD:"/usr/lib/x86_64-linux-gnu/libGLEW.so"
+
+
 # ### terminator window settings
 # COPY assets/config /
 
 # cd for running python code
-WORKDIR /home/tomoya-y/workspace/C-DSVAE
+# WORKDIR /nfs/workspace/
+# WORKDIR /nfs/workspace/C-DSVAE
+# WORKDIR /home/tomoya-y/workspace/C-DSVAE
 # WORKDIR /home/tomoya-y/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder
 # WORKDIR /home/tomoya-y/workspace/Controllable-C-DSVAE
