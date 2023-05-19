@@ -154,7 +154,7 @@ ENV LD_PRELOAD=$LD_PRELOAD:"/usr/lib/x86_64-linux-gnu/libGLEW.so"
 # COPY assets/config /
 
 # cd for running python code
-# WORKDIR /nfs/workspace/
+WORKDIR /nfs/workspace/
 # WORKDIR /nfs/workspace/C-DSVAE
 # WORKDIR /home/tomoya-y/workspace/C-DSVAE
 # WORKDIR /home/tomoya-y/workspace/Contrastively-Disentangled-Sequential-Variational-Audoencoder
